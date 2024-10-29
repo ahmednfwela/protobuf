@@ -1381,7 +1381,7 @@ template <typename Arg_, typename... Args_>
 inline void CodeGeneratorRequest::set_file_to_generate(int index, Arg_&& value, Args_... args) {
   ::google::protobuf::internal::AssignToString(
       *_internal_mutable_file_to_generate()->Mutable(index),
-      std::forward<Arg_>(value), args... );
+      std::forward<Arg_>(value), args...);
   // @@protoc_insertion_point(field_set:google.protobuf.compiler.CodeGeneratorRequest.file_to_generate)
 }
 template <typename Arg_, typename... Args_>

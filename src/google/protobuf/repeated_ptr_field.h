@@ -24,6 +24,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <cstdint>
+#include <iostream>
 #include <iterator>
 #include <limits>
 #include <new>
@@ -1987,6 +1988,26 @@ const T& CheckedGetOrDefault(const RepeatedPtrField<T>& field, int index) {
     return GenericTypeHandler<T>::default_instance();
   }
   return field.Get(index);
+}
+
+template <typename T>
+inline void CheckIndexInBoundsOrAbort(const RepeatedPtrField<T>& field,
+                                      int index) {
+  if (ABSL_PREDICT_FALSE(index < 0 || index >= field.size())) {
+    LogIndexOutOfBoundsAndAbort(index, field.size());
+  }
+}
+
+template <typename T>
+const T& CheckedGetOrAbort(const RepeatedPtrField<T>& field, int index) {
+  CheckIndexInBoundsOrAbort(field, index);
+  return field.Get(index);
+}
+
+template <typename T>
+inline T* CheckedMutableOrAbort(RepeatedPtrField<T>* field, int index) {
+  CheckIndexInBoundsOrAbort(*field, index);
+  return field->Mutable(index);
 }
 
 }  // namespace internal

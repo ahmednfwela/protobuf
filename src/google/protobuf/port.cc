@@ -13,6 +13,7 @@
 #include <map>
 #include <utility>
 
+#include "absl/log/absl_log.h"
 #include "absl/strings/numbers.h"
 #include "absl/strings/str_format.h"
 #include "absl/strings/str_split.h"
@@ -105,6 +106,10 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GlobalEmptyString
         fixed_address_empty_string{};
 #endif
+
+[[noreturn]] void LogIndexOutOfBoundsAndAbort(int index, int size) {
+  ABSL_LOG(FATAL) << "index: " << index << ", size: " << size;
+}
 
 }  // namespace internal
 }  // namespace protobuf

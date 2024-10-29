@@ -17,6 +17,7 @@
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
+#include <cstdlib>
 #include <new>
 #include <string>
 #include <type_traits>
@@ -521,6 +522,8 @@ class alignas(8) GlobalEmptyString {
 };
 PROTOBUF_EXPORT extern GlobalEmptyString fixed_address_empty_string;
 #endif
+
+[[noreturn]] void LogIndexOutOfBoundsAndAbort(int index, int size);
 
 }  // namespace internal
 }  // namespace protobuf
