@@ -491,6 +491,13 @@ def build_targets(name):
         includes = ["."],
         linkshared = 1,
         linkstatic = 1,
+        tags = [
+            # Exclude this target from wildcard expansion (//...) because it may
+            # not even be buildable. It will be built if it is needed according
+            # to :use_fast_cpp_protos.
+            # https://docs.bazel.build/versions/master/be/common-definitions.html#common-attributes
+            "manual",
+        ],
         deps = [
             ":proto_api",
             "//src/google/protobuf",
@@ -507,14 +514,8 @@ def build_targets(name):
             "//src/google/protobuf:unittest_proto3_cc_proto",
             "@com_google_absl//absl/log:absl_log",
             "@com_google_absl//absl/strings",
-        ] + select({
-            "//python:limited_api_3.9": ["@python-3.9.0//:python_headers"],
-            "//python:full_api_3.9_win32": ["@nuget_python_i686_3.9.0//:python_full_api"],
-            "//python:full_api_3.9_win64": ["@nuget_python_x86-64_3.9.0//:python_full_api"],
-            "//python:limited_api_3.10_win32": ["@nuget_python_i686_3.10.0//:python_limited_api"],
-            "//python:limited_api_3.10_win64": ["@nuget_python_x86-64_3.10.0//:python_limited_api"],
-            "//conditions:default": ["@system_python//:python_headers"],
-        }),
+            "@system_python//:python_headers",
+        ],
     )
 
     internal_py_test(
