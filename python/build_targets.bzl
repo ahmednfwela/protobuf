@@ -489,7 +489,6 @@ def build_targets(name):
                 "//python/dist:osx_x86_64",
                 "//python/dist:osx_aarch64",
             ): ["-Wl,-undefined,dynamic_lookup"],
-            "//python/dist:windows_x86_32": ["-static-libgcc"],
             "//conditions:default": [],
         }),
         includes = ["."],
