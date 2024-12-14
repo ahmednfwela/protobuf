@@ -480,9 +480,6 @@ def build_targets(name):
         ]),
         copts = COPTS + [
             "-DGOOGLE_PROTOBUF_HAS_ONEOF=1",
-            # The Python API requires patterns that are ISO C incompatible, like
-            # casts between function pointers and object pointers.
-            "-Wno-pedantic",
         ],
         linkopts = selects.with_or({
             (
